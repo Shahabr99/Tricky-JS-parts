@@ -1,27 +1,29 @@
-function createAccount(pin, amount) {
+function createAccount(pin, amount=0) {
   // edge cases: incorrect pin, withdrawal amount more than account amount, 
   return {
     checkBalance(userPin) {
-      if(userPin !== pin) return `Wrong pin entered!`;
-      else return `$${amount}`
+      if(userPin !== pin) return `Invalid PIN.`;
+      return `$${amount}`
     },
 
     deposit(userPin, newAmount) {
-      if(userPin !== pin) return `Wrong pin entered!`;
-      amount =+ newAmount;
-      return `${newAmount} is deposited successfully`
+      if(userPin !== pin) return `Invalid PIN.`;
+      amount += newAmount;
+      return `Succesfully deposited $${newAmount}. Current balance: $${amount}.`
     },
 
     withdraw(userPin, withdrawAmount) {
-      if(userPin !== pin) return "Invalid PIN! Try again!";
+      if(userPin !== pin) return "Invalid PIN.";
+
+      if(withdrawAmount > amount) return `Withdrawal amount exceeds account balance. Transaction cancelled.`
       amount -= withdrawAmount;
-      return `${withdrawAmount} is withdrawn!`
+      return `Succesfully withdrew $${withdrawAmount}. Current balance: $${amount}.`
     },
 
-    changePin(userPin) {
-      if(userPin !== pin) return "Invalid PIN! Try again!";
-      pin = userPin;
-      return "Your PIN is successfully changed!"
+    changePin(userPin, newPin) {
+      if(userPin !== pin) return "Invalid PIN.";
+      pin = newPin;
+      return "PIN successfully changed!"
     }
   }
  
